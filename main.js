@@ -10,7 +10,6 @@ let webcontainerInstance;
 
 window.addEventListener("load", async () => {
 	textareaEl.value = files["index.js"].file.contents;
-
 	textareaEl.addEventListener("input", (e) => {
 		writeIndexJS(e.currentTarget.value);
 	});
@@ -34,14 +33,15 @@ window.addEventListener("load", async () => {
 		iframeEl.src = url;
 	});
 
-	startShell(terminal);
+	const shellProcess = await startShell(terminal);
+	window.addEventListener("resize", () => {
+		fitAddon.fit();
+		shellProcess.resize({
+			cols: terminal.cols,
+			rows: terminal.rows,
+		});
+	});
 });
-
-/** @param {string} content */
-
-async function writeIndexJS(content) {
-	await webcontainerInstance.fs.writeFile("/index.js", content);
-}
 
 /**
  * @param {Terminal} terminal
@@ -62,10 +62,20 @@ async function startShell(terminal) {
 	);
 
 	const input = shellProcess.input.getWriter();
+
 	terminal.onData((data) => {
 		input.write(data);
 	});
+
 	return shellProcess;
+}
+
+/**
+ * @param {string} content
+ */
+
+async function writeIndexJS(content) {
+	await webcontainerInstance.fs.writeFile("/index.js", content);
 }
 
 document.querySelector("#app").innerHTML = `
