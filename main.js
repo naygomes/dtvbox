@@ -9,11 +9,6 @@ import { FitAddon } from "xterm-addon-fit";
 let webcontainerInstance;
 
 window.addEventListener("load", async () => {
-	textareaEl.value = files["index.js"].file.contents;
-	textareaEl.addEventListener("input", (e) => {
-		writeIndexJS(e.currentTarget.value);
-	});
-
 	const fitAddon = new FitAddon();
 
 	const terminal = new Terminal({
@@ -80,14 +75,11 @@ async function writeIndexJS(content) {
 
 document.querySelector("#app").innerHTML = `
   <div class="container">
-    <div class="editor">
-      <textarea>I am a textarea</textarea>
-    </div>
+  	<div class="terminal"></div>
     <div class="preview">
       <iframe src="loading.html"></iframe>
-    </div>
+    </div>  
   </div>
-  <div class="terminal"></div>
 `;
 
 /** @type {HTMLIFrameElement | null} */
