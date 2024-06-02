@@ -5,19 +5,19 @@ export const files = {
 	"index.js": {
 		file: {
 			contents: `
-import express from 'express';
+      import express from 'express';
 
-const app = express();
-const port = 3111;
+      const app = express();
+      const port = 3111;
 
-app.use(express.static('./build'))
+      app.use(express.static('./build'))
 
-app.get('*', (req,res) => res.sendFile('index.html' , { root : './build/' }))
+      app.get('*', (req,res) => res.sendFile('index.html' , { root : './build/' }))
 
 
-app.listen(port, () => {
-  console.log(\`App is live at http://localhost:\${port}\`);
-});`,
+      app.listen(port, () => {
+        console.log(\`App is live at http://localhost:\${port}\`);
+      });`,
 		},
 	},
 	build: {
@@ -38,10 +38,25 @@ app.listen(port, () => {
             </head>
             <body>
               <div class="container">
-                <div class="source-element">Hello World</div>
+                <div id="title" class="source-element">Hello World</div>
+                  <a id="button" onclick="changeName()">Change Title</a>
               </div>
             </body>
           </html>
+        `,
+				},
+			},
+			"index.js": {
+				file: {
+					contents: `
+          function changeName() {
+            const element = document.getElementById("title");
+            element.innerHTML = "New title!";
+          }
+          
+          window.onload = function () {
+            document.getElementById("button").focus();
+          };                   
         `,
 				},
 			},
@@ -50,31 +65,33 @@ app.listen(port, () => {
 				file: {
 					contents: `
             .container {
-              position: relative;
-              width: 100vw;
-              height: 100vh;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              gap: 40vh;
+              width: 100%;
+              height: 100%;
             }
             
             .source-element {
-              width: 100%;
+              width: fit-content;
               height: 100%;
-              background-color: #f0f0f0;
               color: #ff0000;
               font-size: 3rem;
             }
-            
-            .appearing-element {
-              position: absolute;
-              width: 50px;
-              height: 50px;
-              background-color: #ff0000;
-              opacity: 0;
-              transition: opacity 0.5s, transform 0.5s;
+
+            a {
+              color: blue;
             }
-  
-            .container:hover .appearing-element {
-              opacity: 1;
-              transform: translate(100%, 100%);
+
+            a:hover {
+              text-decoration: underline;
+              cursor: pointer;
+            }
+
+            a:focus {
+              background-color: lightblue;
             }
           `,
 				},
