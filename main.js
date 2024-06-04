@@ -65,14 +65,6 @@ async function startShell(terminal) {
 	return shellProcess;
 }
 
-/**
- * @param {string} content
- */
-
-async function writeIndexJS(content) {
-	await webcontainerInstance.fs.writeFile("/index.js", content);
-}
-
 document.querySelector("#app").innerHTML = `
   <div class="container">
   	<div class="terminal"></div>
