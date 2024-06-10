@@ -61,7 +61,6 @@ export const files = {
 				},
 			},
 			"index.css": {
-				// Because it's a file, add the "file" key
 				file: {
 					contents: `
             .container {

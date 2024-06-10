@@ -8,66 +8,76 @@ import { FitAddon } from "xterm-addon-fit";
 /** @type {import('@webcontainer/api').WebContainer}  */
 let webcontainerInstance;
 
+let debugMode = true;
+
 window.addEventListener("load", async () => {
-	const fitAddon = new FitAddon();
+  const fitAddon = new FitAddon();
 
-	const terminal = new Terminal({
-		convertEol: true,
-	});
-	terminal.loadAddon(fitAddon);
-	terminal.open(terminalEl);
+  const terminal = new Terminal({
+    convertEol: true,
+  });
+  terminal.loadAddon(fitAddon);
+  terminal.open(terminalEl);
 
-	fitAddon.fit();
+  fitAddon.fit();
 
-	// Call only once
-	webcontainerInstance = await WebContainer.boot();
-	await webcontainerInstance.mount(files);
+  // Call only once
+  webcontainerInstance = await WebContainer.boot();
+  await webcontainerInstance.mount(files);
 
-	// Wait for `server-ready` event
-	webcontainerInstance.on("server-ready", (port, url) => {
-		iframeEl.src = url;
-	});
+  const exitCode = await installDependencies(terminal);
+  if (exitCode !== 0) {
+    throw new Error("Falha na Instalação");
+  }
 
-	const shellProcess = await startShell(terminal);
-	window.addEventListener("resize", () => {
-		fitAddon.fit();
-		shellProcess.resize({
-			cols: terminal.cols,
-			rows: terminal.rows,
-		});
-	});
+  startDevServer(terminal);
 });
 
 /**
  * @param {Terminal} terminal
  */
-async function startShell(terminal) {
-	const shellProcess = await webcontainerInstance.spawn("jsh", {
-		terminal: {
-			cols: terminal.cols,
-			rows: terminal.rows,
-		},
-	});
-	shellProcess.output.pipeTo(
-		new WritableStream({
-			write(data) {
-				terminal.write(data);
-			},
-		})
-	);
+async function installDependencies(terminal) {
+  // Install dependencies
+  const installProcess = await webcontainerInstance.spawn("npm", ["install"]);
+  installProcess.output.pipeTo(
+    new WritableStream({
+      write(data) {
+        terminal.write(data);
+      },
+    })
+  );
+  // Wait for install command to exit
+  return installProcess.exit;
+}
 
-	const input = shellProcess.input.getWriter();
+/**
+ * @param {Terminal} terminal
+ */
+async function startDevServer(terminal) {
+  // Run `npm run start` to start the Express app
+  const serverProcess = await webcontainerInstance.spawn("npm", [
+    "run",
+    "start",
+  ]);
+  serverProcess.output.pipeTo(
+    new WritableStream({
+      write(data) {
+        terminal.write(data);
+      },
+    })
+  );
 
-	terminal.onData((data) => {
-		input.write(data);
-	});
-
-	return shellProcess;
+  // Wait for `server-ready` event
+  webcontainerInstance.on("server-ready", (port, url) => {
+    iframeEl.src = url;
+  });
 }
 
 document.querySelector("#app").innerHTML = `
-  <div class="container">
-  	<div class="terminal"></div>
+  <div class="container ${
+    debugMode ? "show-terminal-container" : "hide-terminal-container"
+  }">
+  	<div class="terminal ${debugMode ? "show-terminal" : "hide-terminal"}"></div>
     <div class="preview">
       <iframe src="loading.html"></iframe>
     </div>  
