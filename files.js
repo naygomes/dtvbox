@@ -2,9 +2,9 @@
 /** @type {import('@webcontainer/api').FileSystemTree} */
 
 export const files = {
-	"index.js": {
-		file: {
-			contents: `
+  "index.js": {
+    file: {
+      contents: `
       import express from 'express';
 
       const app = express();
@@ -18,13 +18,13 @@ export const files = {
       app.listen(port, () => {
         console.log(\`App is live at http://localhost:\${port}\`);
       });`,
-		},
-	},
-	build: {
-		directory: {
-			"index.html": {
-				file: {
-					contents: `
+    },
+  },
+  build: {
+    directory: {
+      "index.html": {
+        file: {
+          contents: `
           <!DOCTYPE html>
           <html lang="en">
             <head>
@@ -39,16 +39,16 @@ export const files = {
             <body>
               <div class="container">
                 <div id="title" class="source-element">Hello World</div>
-                  <a id="button" onclick="changeName()">Change Title</a>
+                  <button id="button" onclick="changeName()">Change Title</button>
               </div>
             </body>
           </html>
         `,
-				},
-			},
-			"index.js": {
-				file: {
-					contents: `
+        },
+      },
+      "index.js": {
+        file: {
+          contents: `
           function changeName() {
             const element = document.getElementById("title");
             element.innerHTML = "New title!";
@@ -58,11 +58,11 @@ export const files = {
             document.getElementById("button").focus();
           };                   
         `,
-				},
-			},
-			"index.css": {
-				file: {
-					contents: `
+        },
+      },
+      "index.css": {
+        file: {
+          contents: `
             .container {
               display: flex;
               flex-direction: column;
@@ -80,26 +80,26 @@ export const files = {
               font-size: 3rem;
             }
 
-            a {
+            button {
               color: blue;
             }
 
-            a:hover {
+            button:hover {
               text-decoration: underline;
               cursor: pointer;
             }
 
-            a:focus {
+            button:focus {
               background-color: lightblue;
             }
           `,
-				},
-			},
-		},
-	},
-	"package.json": {
-		file: {
-			contents: `
+        },
+      },
+    },
+  },
+  "package.json": {
+    file: {
+      contents: `
         {
           "name": "client-tv",
           "type": "module",
@@ -111,6 +111,6 @@ export const files = {
             "start": "nodemon index.js"
           }
         }`,
-		},
-	},
+    },
+  },
 };
