@@ -54,10 +54,11 @@ p {
 }
 
 .navbar-buttons {
-  width: 25%;
+  width: fit-content;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 7vw;
 }
 
 button {
