@@ -12,13 +12,16 @@
     />
     <script defer src="./index.js"></script>
 
-    <title>Document</title>
+    <title>DTVBox</title>
   </head>
   <body>
     <div class="container">
-      <div class="logo-container">
+      <div id="navbar">
         <img class="logo" src="../public/logo-dtvbox.png" alt="logo DTVBox" />
-        <button id="button" onclick="changeName()">Créditos</button>
+        <div class="navbar-buttons">
+          <button id="about" onclick="changeName()">Sobre</button>
+          <button id="theme" onclick="changeTheme()">Mudar Tema</button>
+        </div>
       </div>
       <div class="text-container">
         <h1 id="title" class="text">DTV<strong>BOX</strong></h1>
@@ -31,13 +34,13 @@
       <div id="footer">
         <hr class="border" />
         <div id="credits-container">
-          <p class="credits bolder">
-            <strong>Desenvolvido por:</strong> <br />
-            Nayara Gomes da Silva
+          <p class="credits">
+            Desenvolvido por: <br />
+            <strong id="student-name">Nayara Gomes da Silva</strong>
           </p>
           <p class="professor">
-            <strong>Orientado por:</strong><br />
-            Claudio Miceli de Farias
+            Orientado por:<br />
+            <strong id="professor-name">Claudio Miceli de Farias</strong>
           </p>
         </div>
       </div>
