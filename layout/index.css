@@ -75,11 +75,12 @@ button {
   justify-content: center;
   align-items: center;
   gap: 4vh;
+  margin-bottom: 4.5rem;
 }
 
 .text {
   width: fit-content;
-  font-size: 5rem;
+  font-size: 7rem;
   margin: 0;
   font-weight: 400;
 }
@@ -96,6 +97,8 @@ button {
 
 .description {
   font-size: 2rem;
+  text-align: center;
+  width: 80%;
 }
 
 #footer {
@@ -130,5 +133,8 @@ button:hover {
 }
 
 button:focus {
-  background-color: lightblue;
+  color: var(--pink);
+  border-bottom: 1px solid var(--pink);
+  font-weight: bolder;
+  outline: none;
 }
