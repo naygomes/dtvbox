@@ -44,7 +44,7 @@ export const files = {
             <body>
               <div class="container">
                 <div id="navbar">
-                  <img class="logo" src="https://i.ibb.co/4V40m6N/logo-dtvbox.png" alt="logo DTVBox" />
+                  <img class="logo" src="https://dtvbox.netlify.app/logo-dtvbox.png" alt="logo DTVBox" />
                   <div class="navbar-buttons">
                     <button id="home" onclick="changeTheme()">Início</button>
                     <button id="about" onclick="changeDescription()">Sobre</button>
