@@ -183,7 +183,7 @@ export const files = {
                 rgba(0, 0, 0, 0.9),
                 rgba(0, 0, 0, 0.5)
               ),
-              url("https://i.ibb.co/XtXdk8t/screen-tv.jpg");
+              url("https://dtvbox.netlify.app/screen-tv.jpg");
             background-position: center;
             background-size: cover;
           }
