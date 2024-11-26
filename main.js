@@ -21,7 +21,6 @@ window.addEventListener("load", async () => {
 
   fitAddon.fit();
 
-  // Call only once
   webcontainerInstance = await WebContainer.boot();
   await webcontainerInstance.mount(files);
 
@@ -37,7 +36,6 @@ window.addEventListener("load", async () => {
  * @param {Terminal} terminal
  */
 async function installDependencies(terminal) {
-  // Install dependencies
   const installProcess = await webcontainerInstance.spawn("npm", ["install"]);
   installProcess.output.pipeTo(
     new WritableStream({
@@ -46,7 +44,6 @@ async function installDependencies(terminal) {
       },
     })
   );
-  // Wait for install command to exit
   return installProcess.exit;
 }
 
@@ -54,7 +51,6 @@ async function installDependencies(terminal) {
  * @param {Terminal} terminal
  */
 async function startDevServer(terminal) {
-  // Run `npm run start` to start the Express app
   const serverProcess = await webcontainerInstance.spawn("npm", [
     "run",
     "start",
@@ -67,7 +63,6 @@ async function startDevServer(terminal) {
     })
   );
 
-  // Wait for `server-ready` event
   webcontainerInstance.on("server-ready", (port, url) => {
     iframeEl.src = url;
   });

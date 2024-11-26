@@ -6,7 +6,7 @@ function changeText(text) {
 const getKeysCodes = () => {
   const KeyCodes = {};
 
-  KeyCodes.VK_ENTER = 13; // All values based on CEA-2014-A CE-HTML Annex F
+  KeyCodes.VK_ENTER = 13;
   KeyCodes.VK_LEFT = 37;
   KeyCodes.VK_RIGHT = 39;
 
