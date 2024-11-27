@@ -74,7 +74,7 @@ document.querySelector("#app").innerHTML = `
   }">
   	<div class="terminal ${debugMode ? "show-terminal" : "hide-terminal"}"></div>
     <div class="preview">
-      <iframe src="loading.html"></iframe>
+      <iframe src="./loading.html"></iframe>
     </div>  
   </div>
 `;
